@@ -1,8 +1,8 @@
 from fastapi import APIRouter
-from models import User
+from apps.YianBot.models import User
+from core.Config import Config
 
 router = APIRouter()
-
 
 @router.get(
     "/",

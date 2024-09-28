@@ -1,4 +1,4 @@
 from fastapi import APIRouter
-from models import User
+from apps.YianBot.models import User
 
 router = APIRouter()
