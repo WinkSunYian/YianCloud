@@ -1,6 +1,0 @@
-import Config
-
-
-class Route:
-    
-    @

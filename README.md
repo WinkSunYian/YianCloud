@@ -5,9 +5,10 @@ YianCloud
 └─ YianCloud
    ├─ apps
    │  ├─ Tests
-   │  │  ├─ routes
-   │  │  │  └─ urls.py
-   │  │  └─ __init__.py
+   │  │  ├─ configs
+   │  │  └─ routes
+   │  │     ├─ urls.py
+   │  │     └─ __init__.py
    │  └─ YianBot
    │     ├─ configs
    │     │  ├─ db.json
@@ -23,9 +24,6 @@ YianCloud
    │  ├─ db.json
    │  └─ routes.json
    ├─ core
-   │  ├─ Config.py
-   │  ├─ Route.py
-   │  └─ TreeNode.py
    └─ main.py
 
 ```

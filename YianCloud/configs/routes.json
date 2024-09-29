@@ -1,7 +1,0 @@
-{
-    "apps": {
-        "YianBot": "apps.YianBot.routes.router",
-        "Tests": "apps.Tests.routes.router"
-    }
-}
-
