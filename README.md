@@ -7,12 +7,11 @@ YianCloud
    │  ├─ Tests
    │  │  ├─ configs
    │  │  └─ routes
-   │  │     ├─ urls.py
+   │  │     ├─ tests.py
    │  │     └─ __init__.py
    │  └─ YianBot
    │     ├─ configs
-   │     │  ├─ db.json
-   │     │  └─ tortoise.json
+   │     │  └─ db.json
    │     ├─ controllers
    │     │  └─ user.py
    │     ├─ models.py
@@ -21,8 +20,7 @@ YianCloud
    │        ├─ users.py
    │        └─ __init__.py
    ├─ configs
-   │  ├─ db.json
-   │  └─ routes.json
+   │  └─ Config.py
    ├─ core
    └─ main.py
 
