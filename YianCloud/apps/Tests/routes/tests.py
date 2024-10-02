@@ -5,6 +5,16 @@ test = APIRouter()
 
 
 @test.get(
+    "/",
+    summary="这是test的summary",
+    description="这是test的description",
+    deprecated=False,
+)
+async def test_api():
+    return {"message": "Hello World"}
+
+
+@test.get(
     "/a",
     summary="这是test的summary",
     description="这是test的description",
