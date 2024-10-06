@@ -1,6 +1,4 @@
 from fastapi import FastAPI
-from starlette.routing import Host
-
 import uvicorn
 from tortoise import Tortoise
 from tortoise.contrib.fastapi import register_tortoise
@@ -27,7 +25,7 @@ register_tortoise(
 
 if __name__ == "__main__":
     uvicorn.run(
-        "main:app",
+        "test_main:app",
         port=80,
         reload=True,
     )
