@@ -20,4 +20,4 @@ async def websocket_endpoint(websocket: WebSocket):
 
 @router.get("/test")
 async def test():
-    return {"message": "这是websocket测试接口"}
+    return {"message": "这是websocket测试"}
