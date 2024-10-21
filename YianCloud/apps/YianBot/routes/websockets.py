@@ -5,9 +5,8 @@ from apps.YianBot.models import User
 router = APIRouter()
 
 
-@router.websocket("/ws")
+@router.websocket()
 async def websocket_endpoint(websocket: WebSocket):
-    # print(f"{websocket.client.host}")
     print("WebSocket连接")
     await websocket.accept()
     try:
