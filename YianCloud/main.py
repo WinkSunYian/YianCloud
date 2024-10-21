@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
 from tortoise import Tortoise
 from tortoise.contrib.fastapi import register_tortoise
@@ -21,6 +22,13 @@ test = FastAPI(
     openapi_url="/api/openapi.json",  # 设置 OpenAPI schema 路径
 )
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 或者指定允许的域名
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 # 为子应用添加路由
 yianbot.include_router(yianbot_router, prefix="/api", tags=["Router YianBot"])
 test.include_router(test_router, prefix="/api", tags=["Router test"])
