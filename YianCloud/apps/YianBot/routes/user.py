@@ -36,3 +36,9 @@ async def get(qq: str):
 async def get():
     users = await User.all()
     return users
+
+
+@router.post("/qq/{qq}", summary="注册用户")
+async def post(qq: str):
+    user = await User.create(account=f"qq{qq}", qq=qq)
+    return user

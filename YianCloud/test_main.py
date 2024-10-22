@@ -19,7 +19,7 @@ register_tortoise(
     app=app,
     db_url=DatabaseConfig.db_url,
     modules={"models": ["apps.YianBot.models"]},
-    generate_schemas=False,  # 自动生成数据库表结构，第一次运行时设置为True
+    generate_schemas=False,
     add_exception_handlers=True,
 )
 

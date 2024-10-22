@@ -1,7 +1,8 @@
 from fastapi import FastAPI
-import uvicorn
 from tortoise import Tortoise
 from tortoise.contrib.fastapi import register_tortoise
+import uvicorn
+
 from core.HostRouterMiddleware import HostRouterMiddleware
 from apps.YianBot.routes import router as yianbot_router
 from apps.Tests.routes import router as test_router

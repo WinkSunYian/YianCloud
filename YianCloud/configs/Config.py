@@ -21,3 +21,16 @@ class Database(BaseModel):
 
 
 DatabaseConfig = Database(**load_config("configs/database.json"))
+
+
+TORTOISE_ORM = {
+    "connections": {
+        "default": DatabaseConfig.db_url,
+    },
+    "apps": {
+        "models": {
+            "models": ["apps.YianBot.models"],
+            "default": True,
+        },
+    },
+}
