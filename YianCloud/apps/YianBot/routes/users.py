@@ -11,6 +11,8 @@ router = APIRouter()
 )
 async def get(account: str):
     user = await User.get(account=account)
+    if not user:
+        return {"message": "用户不存在"}
     return user
 
 
