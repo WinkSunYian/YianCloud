@@ -9,4 +9,5 @@ router = APIRouter()
 @router.put("/qq/{qq}")
 async def ai_chat(qq: str, message: str, app_key: str = Depends(validate_app_key)):
     user = await User.get(qq=qq)
-    return await get_ai_chat(user, message)
+    response = await get_ai_chat(user, message)
+    return {"message": response}

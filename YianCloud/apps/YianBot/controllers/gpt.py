@@ -15,7 +15,7 @@ async def get_ai_chat(user: User, user_message: str):
 
     # 获取最新的5条对话记录
     dialogues = await user.get_dialogues(5)
-    
+
     # 构建历史消息
     for dialogue in dialogues:
         messages.append({"role": "user", "content": dialogue.content})
