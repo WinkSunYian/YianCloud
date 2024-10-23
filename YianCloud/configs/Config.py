@@ -26,15 +26,3 @@ class AppKey(BaseModel):
 
 DatabaseConfig = Database(**load_config("configs/database.json"))
 AppKeyConfig = AppKey(**load_config("configs/AppKey.json"))
-
-TORTOISE_ORM = {
-    "connections": {
-        "default": DatabaseConfig.db_url,
-    },
-    "apps": {
-        "models": {
-            "models": ["apps.YianBot.models"],
-            "default": True,
-        },
-    },
-}
