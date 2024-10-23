@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, HTTPException
 from apps.YianBot.models import User
+from core.security import validate_app_key
 
 router = APIRouter()
 
@@ -10,9 +11,9 @@ router = APIRouter()
     description="获取指定账号的用户信息",
 )
 async def get(account: str):
-    user = await User.get(account=account)
+    user = await User.get_or_none(account=account)
     if not user:
-        return {"message": "用户不存在"}
+        raise HTTPException(status_code=404, detail="用户不存在")
     return user
 
 
@@ -21,10 +22,10 @@ async def get(account: str):
     summary="获取用户信息",
     description="获取指定QQ号的用户信息",
 )
-async def get(qq: str):
-    user = await User.get(qq=qq)
+async def get_user_info(qq: str, app_key: str = Depends(validate_app_key)):
+    user = await User.get_or_none(qq=qq)
     if not user:
-        return {"message": "用户不存在"}
+        raise HTTPException(status_code=404, detail="用户不存在")
     return user
 
 

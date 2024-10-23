@@ -20,8 +20,12 @@ class Database(BaseModel):
         return f"mysql://{self.user}:{self.password}@{self.host}:{self.port}/{self.database}"
 
 
-DatabaseConfig = Database(**load_config("configs/database.json"))
+class AppKey(BaseModel):
+    APPKEYS: list
 
+
+DatabaseConfig = Database(**load_config("configs/database.json"))
+AppKeyConfig = AppKey(**load_config("configs/AppKey.json"))
 
 TORTOISE_ORM = {
     "connections": {
