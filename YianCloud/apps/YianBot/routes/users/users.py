@@ -6,7 +6,7 @@ router = APIRouter()
 
 
 @router.get(
-    "/account/{account}",
+    "/by-account/{account}",
     summary="获取用户信息",
     description="获取指定账号的用户信息",
 )
@@ -18,7 +18,7 @@ async def get(account: str, app_key: str = Depends(validate_app_key)):
 
 
 @router.get(
-    "/qq/{qq}",
+    "/by-qq/{qq}",
     summary="获取用户信息",
     description="获取指定QQ号的用户信息",
 )
@@ -29,17 +29,7 @@ async def get_user_info(qq: str, app_key: str = Depends(validate_app_key)):
     return user
 
 
-@router.get(
-    "/all",
-    summary="获取所有用户信息",
-    description="获取所有用户信息",
-)
-async def get():
-    users = await User.all()
-    return users
-
-
-@router.post("/qq/{qq}", summary="注册用户")
+@router.post("/by-qq/{qq}", summary="注册用户")
 async def post(qq: str, app_key: str = Depends(validate_app_key)):
     user = await User.create(account=f"qq{qq}", qq=qq)
     return user
