@@ -1,4 +1,3 @@
-# services/GPTService.py
 import openai
 from configs.CHAT_GPT import CHAT_GPT
 
