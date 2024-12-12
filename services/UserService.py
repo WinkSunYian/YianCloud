@@ -56,12 +56,10 @@ class UserService:
         }
 
     @staticmethod
-    async def get_user_tags(user: User) -> List[dict]:
+    async def get_tags(user: User) -> List[dict]:
         """获取用户标签"""
         tags = await TagRepository.get_by_user(user)
-        return [
-            {"id": t.id, "name": t.name, "expiry_date": t.expiry_date} for t in tags
-        ]
+        return tags
 
     @staticmethod
     async def add_user_tag(user: User, name: str, expiry_date: datetime) -> dict:

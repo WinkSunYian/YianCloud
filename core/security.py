@@ -1,14 +1,15 @@
-from fastapi import HTTPException, Request
+from fastapi import HTTPException, Request, Header
 from typing import Optional
 from configs.APP_KEY import APP_KEY
 
 
-def get_appkey(request: Request) -> Optional[str]:
-    appkey = request.headers.get("app-key")
-
-    # 做一个简易的验证
-    appkey = verify_appkey(appkey)
-    return appkey
+def get_appkey(app_key: str = Header(..., alias="app-key")) -> str:
+    """
+    从请求头中获取 app-key 并返回
+    :param app_key: 请求头中的 app-key
+    """
+    app_key = verify_appkey(app_key)
+    return app_key
 
 
 def verify_appkey(appkey: str) -> str:
