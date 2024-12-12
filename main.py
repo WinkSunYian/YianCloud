@@ -28,8 +28,8 @@ def get_host_app_map() -> dict:
     """返回主机到应用的映射，可以从配置文件中读取"""
     # 假设从配置文件或数据库获取主机映射
     return {
-        "bot.sunyian.cloud": FastAPI(docs_url="/api/docs"),
-        "test.sunyian.cloud": FastAPI(docs_url="/api/docs"),
+        "bot.sunyian.cloud": FastAPI(docs_url="/api/docs",openapi_url="/api/openapi.json",redoc_url="/api/redoc"),
+        "test.sunyian.cloud": FastAPI(docs_url="/api/docs",openapi_url="/api/openapi.json",redoc_url="/api/redoc"),
     }
 
 
