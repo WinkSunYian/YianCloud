@@ -1,54 +1,61 @@
 from fastapi import FastAPI
-from tortoise import Tortoise
-from tortoise.contrib.fastapi import register_tortoise
 import uvicorn
-
+from core.fastapi_init_content import init, shutdown
+from core.router import auto_register_routes
+from core.setting import Setting
 from middleware.HostRouterMiddleware import HostRouterMiddleware
-from apps.YianBot.routes import router as yianbot_router
-from apps.Tests.routes import router as test_router
-from configs.Config import DatabaseConfig
 
-# 创建主应用
-app = FastAPI()
-# 创建子应用
-yianbot = FastAPI(
-    docs_url="/api/docs",  # 设置 Swagger UI 文档路径
-    redoc_url="/api/redoc",  # 设置 ReDoc 文档路径
-    openapi_url="/api/openapi.json",  # 设置 OpenAPI schema 路径
-)
-test = FastAPI(
-    docs_url="/api/docs",  # 设置 Swagger UI 文档路径
-    redoc_url="/api/redoc",  # 设置 ReDoc 文档路径
-    openapi_url="/api/openapi.json",  # 设置 OpenAPI schema 路径
-)
 
-# 为子应用添加路由
-yianbot.include_router(yianbot_router, prefix="/api", tags=["Router YianBot"])
-test.include_router(test_router, prefix="/api", tags=["Router test"])
+def create_app() -> FastAPI:
+    app = FastAPI()
 
-# 定义主机和应用的映射
-host_app_map = {
-    "bot.sunyian.cloud": yianbot,
-    "test.sunyian.cloud": test,
-}
+    # 通过配置来获取主机到应用的映射
+    host_app_map = get_host_app_map()
 
-# 添加中间件
-app.add_middleware(HostRouterMiddleware, host_app_map=host_app_map)
+    # 设置事件处理器
+    setup_event_handlers(app)
 
-# 数据库和时区配置
-Tortoise._init_timezone(use_tz=False, timezone="Asia/Shanghai")
-register_tortoise(
-    app=app,
-    db_url=DatabaseConfig.db_url,
-    modules={"models": ["db.models"]},
-    generate_schemas=False,  # 第一次运行时可以设置为 True
-    add_exception_handlers=True,
-)
+    # 添加中间件来根据 Host 路由到不同的应用
+    setup_middleware(app, host_app_map)
+
+    # 注册主机相关的路由
+    auto_register_routes_for_host_apps(host_app_map)
+
+    return app
+
+
+def get_host_app_map() -> dict:
+    """返回主机到应用的映射，可以从配置文件中读取"""
+    # 假设从配置文件或数据库获取主机映射
+    return {
+        "bot.sunyian.cloud": FastAPI(),
+        "test.sunyian.cloud": FastAPI(),
+    }
+
+
+def setup_middleware(app: FastAPI, host_app_map: dict):
+    """设置Host路由中间件"""
+    app.add_middleware(HostRouterMiddleware, host_app_map=host_app_map)
+
+
+def setup_event_handlers(app: FastAPI):
+    """设置事件处理器"""
+    app.add_event_handler("startup", init)
+    app.add_event_handler("shutdown", shutdown)
+
+
+def auto_register_routes_for_host_apps(host_app_map: dict):
+    """为每个主机映射的应用自动注册路由"""
+    for host, app in host_app_map.items():
+        if host == "bot.sunyian.cloud":
+            auto_register_routes(app, router_path="/api", directory="apps/YianBot")
+        elif host == "test.sunyian.cloud":
+            auto_register_routes(app, router_path="/api", directory="apps/Tests")
+
+
+# 创建应用
+app = create_app()
 
 # 启动应用
 if __name__ == "__main__":
-    uvicorn.run(
-        "main:app",
-        port=8000,
-        reload=True,
-    )
+    uvicorn.run("main:app", port=Setting.PORT, reload=True)
