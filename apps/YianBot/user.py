@@ -1,6 +1,7 @@
 from fastapi import Depends
 from utils.ServiceRouter import ServiceRouter
 from services.UserService import UserService
+from core.security import get_appkey
 
 
 class UserRouter(ServiceRouter):
@@ -8,6 +9,6 @@ class UserRouter(ServiceRouter):
         self.set_path("/user/{user_id}")
         self.setup_routes()
 
-    async def get(self, user_id, app_key=Depends()):
+    async def get(self, user_id, app_key=Depends(get_appkey)):
         user = await UserService.get_user(user_id)
         return self.res(data=user)
