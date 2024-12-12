@@ -6,7 +6,7 @@ from core.security import get_appkey
 
 class UserRouter(ServiceRouter):
     def __init__(self):
-        self.set_path("/user/{user_id}")
+        self.set_path("/users/{user_id}")
         self.setup_routes()
 
     async def get(self, user_id, app_key=Depends(get_appkey)):
