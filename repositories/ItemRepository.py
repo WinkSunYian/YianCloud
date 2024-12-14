@@ -8,7 +8,7 @@ class ItemRepository:
     @staticmethod
     async def get_by_user_id(user_id: int) -> List[Item]:
         """根据用户 ID 获取 Item。"""
-        return await Item.filter(user_id=user_id)
+        return await Item.filter(user_id=user_id).all()
 
     @staticmethod
     async def create(

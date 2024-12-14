@@ -7,12 +7,12 @@ from pydantic import BaseModel
 from datetime import datetime
 
 
-class TagsRequest(BaseModel):
+class TagRequest(BaseModel):
     name: str
     expiry_date: datetime
 
 
-class TagsRouter(ServiceRouter):
+class TagRouter(ServiceRouter):
     def __init__(self):
         self.set_path("/users/{user_id}/tags")
         self.set_desc("get", "获取用户所有标签", "获取用户所有标签")
@@ -25,7 +25,7 @@ class TagsRouter(ServiceRouter):
 
     async def post(
         self,
-        tags_request: TagsRequest,
+        tags_request: TagRequest,
         user_id: str,
         app_key: str = Depends(get_appkey),
     ):

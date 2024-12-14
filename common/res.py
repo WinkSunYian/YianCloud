@@ -7,7 +7,7 @@ from common.error_code import ErrorBase
 def response_data(
     error: ErrorBase = None,
     status_code=200,
-    msg: str = "[MSG]",
+    msg: str = "成功",
     data: Union[Dict, List] = {},
     response: Optional[Response] = None,
 ) -> ResponseModel:

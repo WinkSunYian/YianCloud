@@ -1,12 +1,15 @@
 from repositories.ItemRepository import ItemRepository
+from repositories.UserRepository import UserRepository
 
 
 class ItemService:
 
     @staticmethod
-    async def get_by_user_id(user_id):
+    async def get_by_user(identifier) -> list:
         """获取用户道具列表"""
-        return await ItemRepository.get_by_user_id(user_id)
+        user = await UserRepository.get_user(identifier)
+        items = await ItemRepository.get_by_user_id(user_id=user.id)
+        return [{"name": item.name, "quantity": item.quantity} for item in items]
 
     @staticmethod
     async def add_quantity(user_id: int, item_name: str, amount: int):
