@@ -8,7 +8,7 @@ from core.security import get_appkey
 
 class SignInRouter(ServiceRouter):
     def __init__(self):
-        self.set_path("/users/{user_id}/sign_in")
+        self.set_path("/users/{user_id}/sign-in")
         self.set_desc("put", "签到", "获取签到信息")
         self.setup_routes()
 
