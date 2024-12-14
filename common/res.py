@@ -8,7 +8,7 @@ def response_data(
     error: ErrorBase = None,
     status_code=200,
     msg: str = "[MSG]",
-    data: Union[Dict, List] = [],
+    data: Union[Dict, List] = {},
     response: Optional[Response] = None,
 ) -> ResponseModel:
     if response:

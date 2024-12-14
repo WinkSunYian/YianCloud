@@ -14,4 +14,4 @@ class SignInRouter(ServiceRouter):
 
     async def put(self, user_id: str, app_key: str = Depends(get_appkey)):
         msg = await SignInService.sign_in(user_id)
-        return self.res(data={"msg": msg})
+        return self.res(msg=msg)
