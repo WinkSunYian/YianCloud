@@ -1,5 +1,5 @@
 from tortoise import fields, models
-from db.models import Dialogue, Backpack, Tag
+from db.models import Dialogue, Tag
 from datetime import datetime
 
 

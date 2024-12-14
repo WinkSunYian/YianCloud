@@ -3,7 +3,6 @@ from configs.DATABASE import DATABASE
 
 
 async def datebase_connect(generate_schemas=True):
-
     # 使用Asia/Shanghai时区
     Tortoise._init_timezone(use_tz=False, timezone="Asia/Shanghai")
     await Tortoise.init(
