@@ -20,8 +20,8 @@ class ChatService:
 
         dialogues = await DialogueRepository.get_by_user_id(user_id=user_id, limit=5)
         for dialogue in dialogues:
-            messages.append({"role": "user", "content": dialogue["content"]})
-            messages.append({"role": "assistant", "content": dialogue["content"]})
+            messages.append({"role": "user", "content": dialogue.content})
+            messages.append({"role": "assistant", "content": dialogue.content})
 
         messages.append({"role": "user", "content": user_message})
 
