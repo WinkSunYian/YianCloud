@@ -1,6 +1,7 @@
 from fastapi import Depends
 from utils.ServiceRouter import ServiceRouter
 from repositories.TagRepository import TagRepository
+from repositories.UserRepository import UserRepository
 from core.security import get_appkey
 from common.error_code import ERROR_USER_NOT_FOUND
 from pydantic import BaseModel
@@ -20,6 +21,9 @@ class TagRouter(ServiceRouter):
         self.setup_routes()
 
     async def get(self, user_id: str, app_key: str = Depends(get_appkey)):
+        user = await UserRepository.get_user(user_id)
+        if not user:
+            return self.res(error_code=ERROR_USER_NOT_FOUND)
         tags = await TagRepository.get_by_user_id(user_id)
         return self.res(data=tags)
 
@@ -29,9 +33,12 @@ class TagRouter(ServiceRouter):
         user_id: str,
         app_key: str = Depends(get_appkey),
     ):
+        user = await UserRepository.get_user(user_id)
+        if not user:
+            return self.res(error_code=ERROR_USER_NOT_FOUND)
         tag = await TagRepository.create(
             user_id=user_id,
             name=tags_request.name,
             expiry_date=tags_request.expiry_date,
         )
-        return self.res(data=tag)
+        return self.res(status_code=201, data=tag)
