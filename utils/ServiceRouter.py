@@ -2,6 +2,13 @@ from fastapi import APIRouter, Response
 from typing import Optional
 from models.ResponseModel import ResponseModel
 from common.res import response_data
+from pydantic import BaseModel
+
+
+class ErrorResponseModel(BaseModel):
+    error_code: str
+    message: str
+    details: dict = None
 
 
 class ServiceRouter:
@@ -72,6 +79,30 @@ class ServiceRouter:
             if self.is_method_overridden(method):
                 self.router.add_api_route(
                     path=self.path,
+                    responses={
+                        # 422: {},
+                        400: {
+                            "description": "请求错误",
+                            "model": ErrorResponseModel,  # 指定错误模型
+                            "content": {
+                                "application/json": {
+                                    "example": {
+                                        "error_code": "INVALID_INPUT",
+                                        "message": "输入数据不合法",
+                                        "details": {
+                                            "field": "value must be a positive integer"
+                                        },
+                                    }
+                                }
+                            },
+                        },
+                        200: {
+                            "description": "成功响应",
+                            "content": {
+                                "application/json": {"example": {"key": "value"}}
+                            },
+                        },
+                    },
                     response_model=ResponseModel,
                     endpoint=getattr(self, method),
                     description=self.description.get(method),

@@ -35,7 +35,7 @@ class TagRouter(ServiceRouter):
     ):
         user = await UserRepository.get_user(user_id)
         if not user:
-            return self.res(error_code=ERROR_USER_NOT_FOUND)
+            return self.res(error=ERROR_USER_NOT_FOUND)
         tag = await TagRepository.create(
             user_id=user_id,
             name=tags_request.name,
