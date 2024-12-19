@@ -10,8 +10,6 @@ class ChatService:
     async def get_gpt_response(identifier: str, user_message: str):
         user = await UserRepository.get_user(identifier)
         messages = await ChatService.prepare_messages(user.id, user_message)
-        for message in messages:
-            print(message)
         gpt_response = await GPTService.get_ai_chat(messages)
         await ChatService.save_dialogues(user.id, user_message, gpt_response)
         return gpt_response
