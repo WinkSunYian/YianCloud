@@ -10,6 +10,8 @@ class ChatService:
     async def get_gpt_response(identifier: str, user_message: str):
         user = await UserRepository.get_user(identifier)
         messages = await ChatService.prepare_messages(user.id, user_message)
+        for message in messages:
+            print(message)
         gpt_response = await GPTService.get_ai_chat(messages)
         await ChatService.save_dialogues(user.id, user_message, gpt_response)
         return gpt_response
@@ -18,13 +20,11 @@ class ChatService:
     async def prepare_messages(user_id: int, user_message: str):
         messages = [{"role": "system", "content": CHAT_GPT.CUE_WORD}]
 
-        dialogues = await DialogueRepository.get_by_user_id(user_id=user_id, limit=5)
+        dialogues = await DialogueRepository.get_by_user_id(user_id=user_id, limit=10)
         for dialogue in dialogues:
-            messages.append({"role": "user", "content": dialogue.content})
-            messages.append({"role": "assistant", "content": dialogue.content})
+            messages.append({"role": dialogue.role, "content": dialogue.content})
 
         messages.append({"role": "user", "content": user_message})
-
         return messages
 
     @staticmethod

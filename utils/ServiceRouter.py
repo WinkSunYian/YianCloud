@@ -83,7 +83,7 @@ class ServiceRouter:
                         # 422: {},
                         400: {
                             "description": "请求错误",
-                            "model": ErrorResponseModel,  # 指定错误模型
+                            "model": ErrorResponseModel,
                             "content": {
                                 "application/json": {
                                     "example": {

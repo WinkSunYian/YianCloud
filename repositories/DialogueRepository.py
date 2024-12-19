@@ -14,12 +14,7 @@ class DialogueRepository:
         :param limit: 获取的最大条数
         :return: 对话记录列表
         """
-        return (
-            await Dialogue.filter(user_id=user_id)
-            .order_by("-timestamp")
-            .limit(limit)
-            .all()
-        )
+        return await Dialogue.filter(user_id=user_id).order_by("-id").limit(limit)
 
     @staticmethod
     async def create(user_id: int, role: str, content: str):
