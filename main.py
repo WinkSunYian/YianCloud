@@ -10,43 +10,34 @@ from common.exceptions.handlers import global_exception_handler, BaseHTTPExcepti
 
 def create_app() -> FastAPI:
     app = FastAPI()
+    app_bot = FastAPI(
+        docs_url="/api/docs",
+        openapi_url="/api/openapi.json",
+        redoc_url="/api/redoc",
+    )
+    app_test = FastAPI(
+        docs_url="/api/docs",
+        openapi_url="/api/openapi.json",
+        redoc_url="/api/redoc",
+    )
+    host_app_map = {
+        "bot.sunyian.cloud": app_bot,
+        "test.sunyian.cloud": app_test,
+    }
 
     setup_event_handlers(app)
-    setup_exception_handlers(app)
-
-    host_app_map = get_host_app_map()
-    setup_middleware(app, host_app_map)
-
+    setyp_host_router_middleware(app, host_app_map)
     auto_register_routes_for_host_apps(app, host_app_map)
 
-    host_app_map["bot.sunyian.cloud"].openapi = generate_custom_openapi(
-        app=host_app_map["bot.sunyian.cloud"]
-    )
-    host_app_map["test.sunyian.cloud"].openapi = generate_custom_openapi(
-        app=host_app_map["test.sunyian.cloud"]
-    )
-    # app.openapi = generate_custom_openapi(app=app)
+    setup_exception_handlers(app_bot)
+
+    app_bot.openapi = generate_custom_openapi(app=app_bot)
+    app_test.openapi = generate_custom_openapi(app=app_test)
 
     return app
 
 
-def get_host_app_map() -> dict:
-    """返回主机到应用的映射，可以从配置文件中读取"""
-    return {
-        "bot.sunyian.cloud": FastAPI(
-            docs_url="/api/docs",
-            openapi_url="/api/openapi.json",
-            redoc_url="/api/redoc",
-        ),
-        "test.sunyian.cloud": FastAPI(
-            docs_url="/api/docs",
-            openapi_url="/api/openapi.json",
-            redoc_url="/api/redoc",
-        ),
-    }
-
-
-def setup_middleware(app: FastAPI, host_app_map: dict):
+def setyp_host_router_middleware(app: FastAPI, host_app_map: dict):
     """设置Host路由中间件"""
     app.add_middleware(HostRouterMiddleware, host_app_map=host_app_map)
 
