@@ -19,7 +19,13 @@ def create_app() -> FastAPI:
 
     auto_register_routes_for_host_apps(app, host_app_map)
 
-    app.openapi = generate_custom_openapi(app=app)
+    host_app_map["bot.sunyian.cloud"].openapi = generate_custom_openapi(
+        app=host_app_map["bot.sunyian.cloud"]
+    )
+    host_app_map["test.sunyian.cloud"].openapi = generate_custom_openapi(
+        app=host_app_map["test.sunyian.cloud"]
+    )
+    # app.openapi = generate_custom_openapi(app=app)
 
     return app
 
@@ -55,10 +61,8 @@ def auto_register_routes_for_host_apps(app: FastAPI, host_app_map: dict):
     """为每个主机映射的应用自动注册路由"""
     for host, sub_app in host_app_map.items():
         if host == "bot.sunyian.cloud":
-            app.mount(path="", app=sub_app, name="bot")
             auto_register_routes(sub_app, router_path="/api", directory="apps/YianBot")
         elif host == "test.sunyian.cloud":
-            app.mount(path="", app=sub_app, name="test")
             auto_register_routes(sub_app, router_path="/api", directory="apps/Tests")
 
 
