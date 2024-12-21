@@ -12,8 +12,10 @@ class SignInService:
     async def sign_in(identifier: str):
         """签到"""
         user = await UserRepository.get_user(identifier)
+        if not user:
+            raise ValueError("用户不存在！")
         if await SignInService.check_sign_in(user.id):
-            return "你今天已经签到过了！"
+            raise ValueError("今日已签到！")
         await SignInService.add_sign_in_tag(user.id)
         award_msg = await SignInService.sign_in_award(user.id)
         return "签到成功！" + award_msg

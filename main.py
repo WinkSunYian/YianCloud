@@ -4,6 +4,7 @@ from core.fastapi_init_content import init, shutdown
 from core.router import auto_register_routes
 from core.setting import Setting
 from middleware.HostRouterMiddleware import HostRouterMiddleware
+from utils.openapi import generate_custom_openapi
 
 
 def create_app() -> FastAPI:
@@ -20,6 +21,8 @@ def create_app() -> FastAPI:
 
     # 注册主机相关的路由
     auto_register_routes_for_host_apps(host_app_map)
+
+    app.openapi = generate_custom_openapi(app=app)
 
     return app
 

@@ -79,30 +79,7 @@ class ServiceRouter:
             if self.is_method_overridden(method):
                 self.router.add_api_route(
                     path=self.path,
-                    responses={
-                        # 422: {},
-                        400: {
-                            "description": "请求错误",
-                            "model": ErrorResponseModel,
-                            "content": {
-                                "application/json": {
-                                    "example": {
-                                        "error_code": "INVALID_INPUT",
-                                        "message": "输入数据不合法",
-                                        "details": {
-                                            "field": "value must be a positive integer"
-                                        },
-                                    }
-                                }
-                            },
-                        },
-                        200: {
-                            "description": "成功响应",
-                            "content": {
-                                "application/json": {"example": {"key": "value"}}
-                            },
-                        },
-                    },
+                    responses={},
                     response_model=ResponseModel,
                     endpoint=getattr(self, method),
                     description=self.description.get(method),

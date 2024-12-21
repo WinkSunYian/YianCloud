@@ -3,9 +3,9 @@ from utils.ServiceRouter import ServiceRouter
 from repositories.TagRepository import TagRepository
 from repositories.UserRepository import UserRepository
 from core.security import get_appkey
-from common.error_code import ERROR_USER_NOT_FOUND
-from pydantic import BaseModel
+from common.exceptions.http_exceptions import UserNotFoundException
 from datetime import datetime
+from pydantic import BaseModel
 
 
 class TagRequest(BaseModel):
@@ -23,7 +23,7 @@ class TagRouter(ServiceRouter):
     async def get(self, user_id: str, app_key: str = Depends(get_appkey)):
         user = await UserRepository.get_user(user_id)
         if not user:
-            return self.res(error=ERROR_USER_NOT_FOUND)
+            raise UserNotFoundException()
         tags = await TagRepository.get_by_user_id(user_id)
         return self.res(data=tags)
 

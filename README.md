@@ -9,18 +9,26 @@ YianCloud
 │  │  └─ test1.py
 │  └─ YianBot
 │     ├─ chat_ai.py
+│     ├─ items.py
+│     ├─ robbery.py
 │     ├─ server_status.py
 │     ├─ services
 │     │  ├─ ChatService.py
 │     │  ├─ GPTService.py
+│     │  ├─ RobberyService.py
 │     │  ├─ SignInService.py
 │     │  └─ __init__.py
 │     ├─ sign_in.py
 │     ├─ tags.py
 │     ├─ users.py
-│     └─ websockets.py
+│     ├─ websockets.py
+│     └─ __init__.py
 ├─ common
 │  ├─ error_code.py
+│  ├─ exceptions
+│  │  ├─ BaseHTTPException.py
+│  │  ├─ handlers.py
+│  │  └─ http_exceptions.py
 │  └─ res.py
 ├─ core
 │  ├─ fastapi_init_content.py
@@ -50,9 +58,13 @@ YianCloud
 │  └─ UserRepository.py
 ├─ requirements.txt
 ├─ services
-│  └─ ItemService.py
+│  ├─ DialogueService.py
+│  ├─ ItemService.py
+│  ├─ TagService.py
+│  └─ UserService.py
 ├─ test_main.py
 └─ utils
+   ├─ openapi.py
    └─ ServiceRouter.py
 
 ```
