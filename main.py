@@ -11,17 +11,12 @@ from common.exceptions.handlers import global_exception_handler, BaseHTTPExcepti
 def create_app() -> FastAPI:
     app = FastAPI()
 
-    # 通过配置来获取主机到应用的映射
-    host_app_map = get_host_app_map()
-
-    # 设置事件处理器
     setup_event_handlers(app)
     setup_exception_handlers(app)
 
-    # 添加中间件来根据 Host 路由到不同的应用
+    host_app_map = get_host_app_map()
     setup_middleware(app, host_app_map)
 
-    # 注册主机相关的路由
     auto_register_routes_for_host_apps(host_app_map)
 
     app.openapi = generate_custom_openapi(app=app)
@@ -66,6 +61,7 @@ def auto_register_routes_for_host_apps(host_app_map: dict):
 
 
 def setup_exception_handlers(app: FastAPI):
+    print("Setting up exception handlers...")
     app.add_exception_handler(BaseHTTPException, global_exception_handler)
 
 
