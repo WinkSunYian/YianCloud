@@ -17,7 +17,7 @@ def create_app() -> FastAPI:
     host_app_map = get_host_app_map()
     setup_middleware(app, host_app_map)
 
-    auto_register_routes_for_host_apps(host_app_map)
+    auto_register_routes_for_host_apps(app, host_app_map)
 
     app.openapi = generate_custom_openapi(app=app)
 
