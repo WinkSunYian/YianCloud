@@ -55,11 +55,12 @@ def auto_register_routes_for_host_apps(app: FastAPI, host_app_map: dict):
     """为每个主机映射的应用自动注册路由"""
     for host, sub_app in host_app_map.items():
         if host == "bot.sunyian.cloud":
+            app.include_router(sub_app)
             auto_register_routes(sub_app, router_path="/api", directory="apps/YianBot")
-            app.mount("", sub_app)
+
         elif host == "test.sunyian.cloud":
+            app.include_router(sub_app)
             auto_register_routes(sub_app, router_path="/api", directory="apps/Tests")
-            app.mount("", sub_app)
 
 
 def setup_exception_handlers(app: FastAPI):
