@@ -51,17 +51,18 @@ def setup_event_handlers(app: FastAPI):
     app.add_event_handler("shutdown", shutdown)
 
 
-def auto_register_routes_for_host_apps(host_app_map: dict):
+def auto_register_routes_for_host_apps(app: FastAPI, host_app_map: dict):
     """为每个主机映射的应用自动注册路由"""
-    for host, app in host_app_map.items():
+    for host, sub_app in host_app_map.items():
         if host == "bot.sunyian.cloud":
-            auto_register_routes(app, router_path="/api", directory="apps/YianBot")
+            auto_register_routes(sub_app, router_path="/api", directory="apps/YianBot")
+            app.mount("/bot", sub_app)
         elif host == "test.sunyian.cloud":
-            auto_register_routes(app, router_path="/api", directory="apps/Tests")
+            auto_register_routes(sub_app, router_path="/api", directory="apps/Tests")
+            app.mount("/test", sub_app)
 
 
 def setup_exception_handlers(app: FastAPI):
-    print("Setting up exception handlers...")
     app.add_exception_handler(BaseHTTPException, global_exception_handler)
 
 
