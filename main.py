@@ -56,10 +56,10 @@ def auto_register_routes_for_host_apps(app: FastAPI, host_app_map: dict):
     for host, sub_app in host_app_map.items():
         if host == "bot.sunyian.cloud":
             auto_register_routes(sub_app, router_path="/api", directory="apps/YianBot")
-            app.mount("/bot", sub_app)
+            app.mount("", sub_app)
         elif host == "test.sunyian.cloud":
             auto_register_routes(sub_app, router_path="/api", directory="apps/Tests")
-            app.mount("/test", sub_app)
+            app.mount("", sub_app)
 
 
 def setup_exception_handlers(app: FastAPI):
