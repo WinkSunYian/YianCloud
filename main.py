@@ -5,6 +5,7 @@ from core.router import auto_register_routes
 from core.setting import Setting
 from middleware.HostRouterMiddleware import HostRouterMiddleware
 from utils.openapi import generate_custom_openapi
+from common.exceptions.handlers import global_exception_handler, BaseHTTPException
 
 
 def create_app() -> FastAPI:
@@ -15,6 +16,7 @@ def create_app() -> FastAPI:
 
     # 设置事件处理器
     setup_event_handlers(app)
+    setup_exception_handlers(app)
 
     # 添加中间件来根据 Host 路由到不同的应用
     setup_middleware(app, host_app_map)
@@ -61,6 +63,10 @@ def auto_register_routes_for_host_apps(host_app_map: dict):
             auto_register_routes(app, router_path="/api", directory="apps/YianBot")
         elif host == "test.sunyian.cloud":
             auto_register_routes(app, router_path="/api", directory="apps/Tests")
+
+
+def setup_exception_handlers(app: FastAPI):
+    app.add_exception_handler(BaseHTTPException, global_exception_handler)
 
 
 # 创建应用
