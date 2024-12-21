@@ -3,6 +3,10 @@ from random import choice
 from repositories.UserRepository import UserRepository
 from repositories.TagRepository import TagRepository
 from services.ItemService import ItemService
+from common.exceptions.http_exceptions import (
+    TodaySignedException,
+    UserNotFoundException,
+)
 
 
 class SignInService:
@@ -13,9 +17,9 @@ class SignInService:
         """签到"""
         user = await UserRepository.get_user(identifier)
         if not user:
-            raise ValueError("用户不存在！")
+            raise UserNotFoundException()
         if await SignInService.check_sign_in(user.id):
-            raise ValueError("今日已签到！")
+            raise TodaySignedException()
         await SignInService.add_sign_in_tag(user.id)
         award_msg = await SignInService.sign_in_award(user.id)
         return "签到成功！" + award_msg
