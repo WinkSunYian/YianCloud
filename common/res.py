@@ -5,7 +5,6 @@ from common.error_code import ErrorBase
 
 
 def response_data(
-    error: ErrorBase = None,
     status_code=200,
     msg: str = "成功",
     data: Union[Dict, List] = {},
@@ -17,8 +16,8 @@ def response_data(
     return JSONResponse(
         status_code=status_code,
         content=ResponseModel(
-            code=error.code if error else 0,
-            msg=error.msg + msg if error else msg,
+            code=status_code,
+            msg=msg,
             data=data,
         ).model_dump(),
     )
