@@ -30,6 +30,7 @@ def create_app() -> FastAPI:
     auto_register_routes_for_host_apps(app, host_app_map)
 
     setup_exception_handlers(app_bot)
+    setup_exception_handlers(app_test)
 
     app_bot.openapi = generate_custom_openapi(app=app_bot)
     app_test.openapi = generate_custom_openapi(app=app_test)
