@@ -3,6 +3,6 @@ from pydantic import BaseModel
 
 
 class ResponseModel(BaseModel):
-    code: int
+    status_code: int
     msg: Optional[str]
     data: Union[dict, list]

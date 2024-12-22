@@ -16,7 +16,7 @@ def response_data(
     return JSONResponse(
         status_code=status_code,
         content=ResponseModel(
-            code=status_code,
+            status_code=status_code,
             msg=msg,
             data=data,
         ).model_dump(),
