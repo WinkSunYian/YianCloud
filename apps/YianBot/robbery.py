@@ -24,4 +24,4 @@ class RobberyRouter(ServiceRouter):
         robbery = await RobberyService.calculate_robbery(
             user_id, tag_request.target_id, "软糖"
         )
-        return self.res(msg=robbery["message"])
+        return self.res(message=robbery["message"])

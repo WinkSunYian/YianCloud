@@ -2,6 +2,7 @@ from services.DialogueService import DialogueService
 from services.UserService import UserService
 from apps.YianBot.services.GPTService import GPTService
 from configs.CHAT_GPT import CHAT_GPT
+from common.exceptions.http_exceptions import UserNotFoundException
 
 
 class ChatService:
@@ -9,6 +10,8 @@ class ChatService:
     @staticmethod
     async def get_gpt_response(identifier: str, user_message: str):
         user = await UserService.get_user(identifier)
+        if not user:
+            raise UserNotFoundException
         messages = await ChatService.prepare_messages(user.id, user_message)
         gpt_response = await GPTService.get_ai_chat(messages)
         await ChatService.save_dialogues(user.id, user_message, gpt_response)
@@ -16,6 +19,7 @@ class ChatService:
 
     @staticmethod
     async def prepare_messages(user_id: int, user_message: str):
+        # 使用默认提示词
         messages = [{"role": "system", "content": CHAT_GPT.CUE_WORD}]
 
         dialogues = await DialogueService.get_by_user_id(user_id=user_id, limit=10)

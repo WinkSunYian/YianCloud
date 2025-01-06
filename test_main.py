@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 import uvicorn
 from middleware.HostRouterMiddleware import HostRouterMiddleware
-from core.fastapi_init_content import init, shutdown
+from core.fastapi_init_content import startup, shutdown
 from core.router import auto_register_routes
 from utils.openapi import generate_custom_openapi
 from common.exceptions.handlers import global_exception_handler, BaseHTTPException
@@ -24,7 +24,7 @@ def setup_middleware(app: FastAPI):
 
 
 def setup_event_handlers(app: FastAPI):
-    app.add_event_handler("startup", init)
+    app.add_event_handler("startup", startup)
     app.add_event_handler("shutdown", shutdown)
 
 

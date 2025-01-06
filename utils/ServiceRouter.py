@@ -5,12 +5,6 @@ from common.res import response_data
 from pydantic import BaseModel
 
 
-class ErrorResponseModel(BaseModel):
-    error_code: str
-    message: str
-    details: dict = None
-
-
 class ServiceRouter:
     def __new__(cls):
         instance = super(ServiceRouter, cls).__new__(cls)
@@ -63,16 +57,16 @@ class ServiceRouter:
             self.description = current_description
 
     def get(self):
-        return Response(content="1")
+        return ResponseModel(message="这是get方法")
 
     def post(self):
-        return Response(content="1")
+        return ResponseModel(message="这是post方法")
 
     def delete(self):
-        return Response(content="1")
+        return ResponseModel(message="这是delete方法")
 
     def put(self):
-        return Response(content="1")
+        return ResponseModel(message="这是put方法")
 
     def setup_routes(self):
         for method in self.methods:

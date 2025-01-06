@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 import uvicorn
-from core.fastapi_init_content import init, shutdown
+from core.fastapi_init_content import startup, shutdown
 from core.router import auto_register_routes
 from core.setting import Setting
 from middleware.HostRouterMiddleware import HostRouterMiddleware
@@ -45,7 +45,7 @@ def setyp_host_router_middleware(app: FastAPI, host_app_map: dict):
 
 def setup_event_handlers(app: FastAPI):
     """设置事件处理器"""
-    app.add_event_handler("startup", init)
+    app.add_event_handler("startup", startup)
     app.add_event_handler("shutdown", shutdown)
 
 

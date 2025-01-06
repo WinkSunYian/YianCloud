@@ -4,5 +4,5 @@ from pydantic import BaseModel
 
 class ResponseModel(BaseModel):
     status_code: int
-    msg: Optional[str]
+    message: Optional[str]
     data: Union[dict, list]

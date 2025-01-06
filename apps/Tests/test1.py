@@ -12,13 +12,5 @@ class test1(ServiceRouter):
         self.set_desc("get", "这是get方法的描述", "这是get方法的详细描述")
         self.setup_routes()
 
-    async def get(self, qq):
-        data = await Tag.filter(user_qq=qq)
-        print(data)
-        return self.res(data={"data": data})
-
-    async def post(self):
-        return self.res(error=ERROR_USER_NOT_FOUND, msg="这是一条附加信息")
-
-    async def put(self):
-        return self.path
+    async def get(self):
+        return self.res(data={"data": 1})
