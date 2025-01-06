@@ -25,7 +25,7 @@ class UserRepository:
     @staticmethod
     async def get_by_account(account: str) -> Optional[User]:
         """通过账户名获取用户"""
-        return await User.filter(account=account).first()
+        return await User.get_or_none(account=account)
 
     @staticmethod
     async def get_by_qq(qq: str) -> Optional[User]:
