@@ -30,7 +30,7 @@ class UserRepository:
     @staticmethod
     async def get_by_qq(qq: str) -> Optional[User]:
         """通过 QQ 获取用户"""
-        return await User.filter(qq=qq).first()
+        return await User.get_or_none(qq=qq)
 
     @staticmethod
     async def create(account: str, qq: str, password: Optional[str] = None) -> User:

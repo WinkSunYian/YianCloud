@@ -1,7 +1,7 @@
 from fastapi import Depends
 from utils.ServiceRouter import ServiceRouter
-from repositories.TagRepository import TagRepository
-from repositories.UserRepository import UserRepository
+from services.UserService import UserService
+from services.TagService import TagService
 from core.security import get_appkey
 from common.exceptions.http_exceptions import UserNotFoundException
 from datetime import datetime
@@ -21,10 +21,10 @@ class TagRouter(ServiceRouter):
         self.setup_routes()
 
     async def get(self, user_id: str, app_key: str = Depends(get_appkey)):
-        user = await UserRepository.get_user(user_id)
+        user = await UserService.get_user(user_id)
         if not user:
             raise UserNotFoundException()
-        tags = await TagRepository.get_by_user_id(user_id)
+        tags = await TagService.get_by_user_id(user_id)
         return self.res(data=tags)
 
     async def post(
@@ -33,10 +33,10 @@ class TagRouter(ServiceRouter):
         user_id: str,
         app_key: str = Depends(get_appkey),
     ):
-        user = await UserRepository.get_user(user_id)
+        user = await UserService.get_user(user_id)
         if not user:
             raise UserNotFoundException()
-        tag = await TagRepository.create(
+        tag = await TagService.create(
             user_id=user_id,
             name=tags_request.name,
             expiry_date=tags_request.expiry_date,
