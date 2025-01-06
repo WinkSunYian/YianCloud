@@ -10,8 +10,6 @@ class ChatService:
     @staticmethod
     async def get_gpt_response(identifier: str, user_message: str):
         user = await UserService.get_user(identifier)
-        if not user:
-            raise UserNotFoundException
         messages = await ChatService.prepare_messages(user.id, user_message)
         gpt_response = await GPTService.get_ai_chat(messages)
         await ChatService.save_dialogues(user.id, user_message, gpt_response)

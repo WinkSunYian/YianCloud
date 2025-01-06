@@ -1,6 +1,6 @@
 from fastapi import Depends
 from utils.ServiceRouter import ServiceRouter
-from common.error_code import ERROR_USER_NOT_FOUND
+from common.exceptions.http_exceptions import NotFoundException
 from apps.YianBot.services.ChatService import ChatService
 from repositories.DialogueRepository import DialogueRepository
 from db.models import Dialogue, Tag
@@ -13,4 +13,5 @@ class test1(ServiceRouter):
         self.setup_routes()
 
     async def get(self):
-        return self.res(data={"data": 1})
+        raise NotFoundException()
+        # return self.res(data={"data": 1})

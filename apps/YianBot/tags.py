@@ -22,11 +22,10 @@ class TagRouter(ServiceRouter):
 
     async def get(self, user_id: str, app_key: str = Depends(get_appkey)):
         user = await UserService.get_user(user_id)
-        print(user)
         if not user:
             raise UserNotFoundException()
-        tags = await TagService.get_by_user_id(user_id)
-        return self.res(data=tags)
+        tags = await TagService.get_by_user_id(user_id=user.id)
+        return self.res(data=[tag.name for tag in tags])
 
     async def post(
         self,
