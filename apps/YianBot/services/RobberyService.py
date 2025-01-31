@@ -44,19 +44,21 @@ class RobberyService:
         min_robbery_quantity = -min(10, user_item.quantity) if user_item else 0
         max_robbery_quantity = min(20, target_item.quantity)
         robbery_quantity = random.randint(min_robbery_quantity, max_robbery_quantity)
-        
+
         # 判断打劫结果
         if robbery_quantity > 0:
             # 减少目标道具数量，增加打劫者道具数量
-            await ItemService.reduce_quantity(target.id, item_name, robbery_quantity)
             await ItemService.add_quantity(user.id, item_name, robbery_quantity)
+            await ItemService.reduce_quantity(target.id, item_name, robbery_quantity)
 
             return {
                 "message": f"打劫成功,抢走了{item_name} x {robbery_quantity}",
                 "robbery_quantity": robbery_quantity,
             }
         elif robbery_quantity < 0:
-            await ItemService.reduce_quantity(user.id, item_name, -robbery_quantity)
+            # 减少打劫者道具数量，增加目标道具数量
+            await ItemService.reduce_quantity(user.id, item_name, robbery_quantity)
+            await ItemService.add_quantity(target.id, item_name, robbery_quantity)
             return {
                 "message": f"打劫失败,反被抢走了{item_name} x {abs(robbery_quantity)}",
                 "robbery_quantity": robbery_quantity,
