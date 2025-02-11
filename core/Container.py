@@ -9,20 +9,23 @@ from services.TagService import TagService
 from apps.YianBot.services.ChatAIService import ChatAIService
 from apps.YianBot.services.ChatGPTService import ChatGPTService
 from apps.YianBot.services.DeepSeekService import DeepSeekService
+from apps.YianBot.services.RobberyService import RobberyService
+from apps.YianBot.services.SignInService import SignInService
 
 
 class Container:
     _instance = None
 
     def __new__(cls, *args, **kwargs):
+        """确保容器是单例的"""
         if not cls._instance:
             cls._instance = super().__new__(cls, *args, **kwargs)
-            # 初始化容器的依赖关系
+            # 初始化服务
             cls._instance._initialize_services()
         return cls._instance
 
     def _initialize_services(self):
-        """初始化所有依赖，确保它们只会创建一次"""
+        """初始化所有依赖关系，避免重复创建"""
         # 初始化仓库
         self.user_repository = UserRepository()
         self.user_metadata_repository = UserMetadataRepository()
@@ -37,11 +40,18 @@ class Container:
         self.chat_gpt_service = ChatGPTService()
         self.deep_seek_service = DeepSeekService()
 
+        # 初始化业务服务
+        self.robbery_service = RobberyService(self.user_service, self.item_service)
+        self.sign_in_service = SignInService(
+            self.user_service, self.tag_service, self.item_service
+        )
+
         # 初始化 ChatAIService 并注入其依赖
         self.chat_ai_service = ChatAIService(
             self.user_metadata_service, self.chat_gpt_service
         )
 
+    # 获取各个服务的实例
     def get_chat_ai_service(self):
         return self.chat_ai_service
 
@@ -62,3 +72,9 @@ class Container:
 
     def get_deep_seek_service(self):
         return self.deep_seek_service
+
+    def get_robbery_service(self):
+        return self.robbery_service
+
+    def get_sign_in_service(self):
+        return self.sign_in_service
