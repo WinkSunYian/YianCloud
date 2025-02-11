@@ -1,4 +1,4 @@
-from configs.CHAT_GPT import CHAT_GPT
+from configs.DEEPSEEK import DEEPSEEK
 
 
 class ChatAIService:
@@ -13,7 +13,7 @@ class ChatAIService:
         user_cue_word = await self.user_metadata_service.get_by_user_id_and_name(
             user_id=identifier, key="面具"
         )
-        gpt_cue_word = CHAT_GPT.CUE_WORD if not user_cue_word else user_cue_word
+        gpt_cue_word = DEEPSEEK.CUE_WORD if not user_cue_word else user_cue_word
 
         # 将面具信息拼接到 messages
         messages.insert(0, {"role": "system", "content": gpt_cue_word})
