@@ -5,7 +5,6 @@ from utils.ServiceRouter import ServiceRouter
 from services.UserService import UserService
 from services.UserMetadataService import UserMetadataService
 from core.security import get_appkey
-from common.error_code import ERROR_USER_NOT_FOUND
 
 
 class UserMetadataRequest(BaseModel):

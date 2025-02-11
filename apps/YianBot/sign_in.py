@@ -1,7 +1,5 @@
 from fastapi import Depends
 from utils.ServiceRouter import ServiceRouter
-from common.error_code import ERROR_USER_NOT_FOUND
-from apps.YianBot.services.ChatService import ChatService
 from apps.YianBot.services.SignInService import SignInService
 from core.security import get_appkey
 

@@ -57,8 +57,8 @@ class RobberyService:
             }
         elif robbery_quantity < 0:
             # 减少打劫者道具数量，增加目标道具数量
-            await ItemService.reduce_quantity(user.id, item_name, robbery_quantity)
-            await ItemService.add_quantity(target.id, item_name, robbery_quantity)
+            await ItemService.add_quantity(user.id, item_name, robbery_quantity)
+            await ItemService.reduce_quantity(target.id, item_name, robbery_quantity)
             return {
                 "message": f"打劫失败,反被抢走了{item_name} x {abs(robbery_quantity)}",
                 "robbery_quantity": robbery_quantity,

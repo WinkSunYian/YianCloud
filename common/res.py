@@ -1,7 +1,6 @@
 from models.ResponseModel import ResponseModel
 from typing import Optional, Union, Dict, List
 from fastapi.responses import Response, JSONResponse
-from common.error_code import ErrorBase
 
 
 def response_data(

@@ -1,8 +1,6 @@
 from fastapi import Depends
 from utils.ServiceRouter import ServiceRouter
 from common.exceptions.http_exceptions import NotFoundException
-from apps.YianBot.services.ChatService import ChatService
-from repositories.DialogueRepository import DialogueRepository
 from db.models import Dialogue, Tag
 
 

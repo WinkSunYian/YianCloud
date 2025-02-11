@@ -1,7 +1,6 @@
 
 ```
 YianCloud
-├─ .gitignore
 ├─ apps
 │  ├─ Tests
 │  │  ├─ 2.py
@@ -13,18 +12,17 @@ YianCloud
 │     ├─ robbery.py
 │     ├─ server_status.py
 │     ├─ services
-│     │  ├─ ChatService.py
-│     │  ├─ GPTService.py
+│     │  ├─ ChatAIService.py
+│     │  ├─ ChatGPTService.py
+│     │  ├─ DeepSeekService.py
 │     │  ├─ RobberyService.py
-│     │  ├─ SignInService.py
-│     │  └─ __init__.py
+│     │  └─ SignInService.py
 │     ├─ sign_in.py
 │     ├─ tags.py
 │     ├─ users.py
-│     ├─ websockets.py
-│     └─ __init__.py
+│     ├─ user_meta_data.py
+│     └─ websockets.py
 ├─ common
-│  ├─ error_code.py
 │  ├─ exceptions
 │  │  ├─ BaseHTTPException.py
 │  │  ├─ handlers.py
@@ -37,10 +35,11 @@ YianCloud
 │  └─ setting.py
 ├─ db
 │  ├─ models
-│  │  ├─ dialogue.py
-│  │  ├─ item.py
-│  │  ├─ tag.py
-│  │  ├─ user.py
+│  │  ├─ Dialogue.py
+│  │  ├─ Item.py
+│  │  ├─ Tag.py
+│  │  ├─ User.py
+│  │  ├─ UserMetadata.py
 │  │  └─ __init__.py
 │  └─ session.py
 ├─ log
@@ -55,13 +54,16 @@ YianCloud
 │  ├─ DialogueRepository.py
 │  ├─ ItemRepository.py
 │  ├─ TagRepository.py
+│  ├─ UserMetadataRepository.py
 │  └─ UserRepository.py
 ├─ requirements.txt
 ├─ services
 │  ├─ DialogueService.py
 │  ├─ ItemService.py
 │  ├─ TagService.py
+│  ├─ UserMetadataService.py
 │  └─ UserService.py
+├─ test.py
 ├─ test_main.py
 └─ utils
    ├─ openapi.py
